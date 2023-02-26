@@ -1,4 +1,4 @@
-# gtfs_to_dates_parser
+# GTFS to Nodes and Edges in a daterange
 Parses GTFS files and generates appropriate routes information for each dates in a range
 
 
