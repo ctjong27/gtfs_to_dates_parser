@@ -14,3 +14,8 @@ In order to limit the scope of data extrapolation, the data will be organized as
     c) Requires Parent_Stop-To-Station analysis via transfers.txt (clustered parent stops)
 
 2) When each directional edge & their weights are calculated per each trip_id, a mapping can consolidate all trip node and edges for any given time period
+
+
+Code is cleaned up to use gtfs_process_workspace.ipynb with calls to python codes for more direct access to execution.
+
+If one prefers to use the notebooks intead they can be found under ./_ipynb_notebooks_moved_From_base/
