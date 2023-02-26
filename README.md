@@ -5,7 +5,7 @@ Parses GTFS files and generates appropriate routes information for each dates in
 ## To Run
 The base workbook "gtfs_process_workspace.ipynb" can be run fully. The ./utils/ python code will handle the download & processing of files.
 
-If one prefers to use the notebooks intead they can be found under ./_ipynb_notebooks_moved_From_base/
+If one prefers to use the notebooks intead they can be found under ./_ipynb_notebooks_moved_From_base/. They will need to be placed back into the parent folder in them to run properly.
 
 ## Logic
 The point of the program is to compile total number of station stops in a node-and-edge method.
