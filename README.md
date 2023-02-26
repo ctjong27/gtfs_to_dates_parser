@@ -2,7 +2,7 @@
 Parses GTFS files and generates appropriate routes information for each dates in a range
 
 
-## To run
+## To Run
 The base workbook "gtfs_process_workspace.ipynb" can be run fully. The ./utils/ python code will handle the download & processing of files.
 
 If one prefers to use the notebooks intead they can be found under ./_ipynb_notebooks_moved_From_base/
