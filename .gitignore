@@ -1,3 +1,4 @@
 files/*
 results/*
 mappings/*
+*/__pycache__/*
