@@ -43,7 +43,6 @@ def aggregate_from_daterange():
         # Loop through each date in the date range and read the corresponding CSV file
         for index, row in queried_date_range_df.iterrows():
             date = row['date']
-            print(date)
             if not os.path.exists(f'results/daily_files/{date}.csv'):
                 print(f'results/daily_files/{date}.csv does not exist. As a reminder, the largest date value is {largest_date_value}')
                 break
