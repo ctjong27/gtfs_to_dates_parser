@@ -51,4 +51,6 @@ def run_networkx_analysis():
     df = pd.DataFrame([degrees,closeness,betweenness]).transpose()
     df.columns = ['degrees','closeness','betweenness']
 
-    df.to_csv('results/networkx_analysis.csv')
+    df = pd.merge(df, df_s, left_index=True, right_on='station_id')
+
+    df[['station_id','stop_lat','stop_lon','degrees','closeness','betweenness']].to_csv('./results/networkx_analysis.csv', index=False)
