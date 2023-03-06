@@ -51,6 +51,36 @@ def run_networkx_analysis():
     df = pd.DataFrame([degrees,closeness,betweenness]).transpose()
     df.columns = ['degrees','closeness','betweenness']
 
+
+    import os
+    extract_path = "./files/extracted/"
+    stops_path = "/stops.txt"
+    gtfs_generation_dates = [item for item in os.listdir(extract_path) if os.path.isdir(os.path.join(extract_path, item))]
+
+    def process_stops_file():
+
+        agg_stops = pd.DataFrame()
+        for gtfs_date in gtfs_generation_dates:
+
+            # Read the stop_times.txt file into a DataFrame
+            stops = pd.read_csv(extract_path + gtfs_date + stops_path)
+            agg_stops = pd.concat([agg_stops, stops])
+
+        agg_stops = agg_stops[['stop_id','parent_station', 'stop_name']] \
+            .drop_duplicates()
+        return(agg_stops)
+    stops_df = process_stops_file()
+    stops_df = stops_df[stops_df['parent_station'].isna()]
+
+    # sort stops_df by stop_id and stop_name length in descending order
+    stops_df_sorted = stops_df.sort_values(['stop_id', 'stop_name'], ascending=[True, False])
+
+    # keep only the rows with no duplicates and the rows with the maximum stop_name for each stop_id
+    stops_df_filtered = stops_df_sorted.loc[~stops_df_sorted.duplicated(subset=['stop_id'], keep=False) | stops_df_sorted.groupby('stop_id')['stop_name'].apply(lambda x: x == x.max())].reset_index(drop=True)
+    stops_df_filtered
+
+    # Merge retrieved station names
+    df_s = pd.merge(df_s, stops_df_filtered, left_on='station_id', right_on='stop_id')
     df = pd.merge(df, df_s, left_index=True, right_on='station_id')
 
     df[['station_id','stop_lat','stop_lon','degrees','closeness','betweenness']].to_csv('./results/networkx_analysis.csv', index=False)
