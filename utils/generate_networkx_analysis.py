@@ -69,6 +69,8 @@ def run_networkx_analysis():
         agg_stops = agg_stops[['stop_id','parent_station', 'stop_name']] \
             .drop_duplicates()
         return(agg_stops)
+    
+    # Retrieve stops file information to populate station detail from 'stop_name'
     stops_df = process_stops_file()
     stops_df = stops_df[stops_df['parent_station'].isna()]
 
