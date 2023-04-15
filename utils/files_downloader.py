@@ -10,7 +10,7 @@ def download_data(url_suffix):
     
     The retrieved data is unzipped, processed, and saved to their respective local directories.
 
-    Data is stored in ./files/ under /zip_files/ which is then extracted into /extracted/
+    Data is stored in ./files/zip_files/ which is then extracted into ./files/extracted/
     """
 
     # Prepare data retrieval via web sraping

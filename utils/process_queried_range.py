@@ -7,6 +7,12 @@ def aggregate_from_daterange(search_start_year, search_start_month, search_start
     """
     This function aggregates data from a range of dates specified by the input parameters.
     
+    Aggregation of total stops made across MTA given a timerange
+    Reads from ./mappings/all_dates_services_schedule.csv, ./mappings/services_to_trips.csv,
+           and ./mappings/trips_to_station_nodes_edges.csv
+    Also reads from ./results/daily_files/{date}.csv for every date
+    Generates ./results/queried_dates/{SEARCH_START_DATE}-{SEARCH_END_DATE}-aggregated_nodes_edges.csv
+
     Parameters:
         search_start_year (int): Year of the start date for the search.
         search_start_month (int): Month of the start date for the search.

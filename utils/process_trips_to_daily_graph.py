@@ -16,6 +16,10 @@ mappings_path = "./mappings/"
 def trips_to_daily_nodes_edges():
     """
     Generates daily node and edge files for each date in the GTFS dataset
+
+    Reads from ./mappings/all_dates_services_schedule.csv, ./mappings/services_to_trips.csv,
+           and ./mappings/trips_to_station_nodes_edges.csv
+    Generates ./results/daily_files/{date}.csv for every date
     """
 
     all_dates_services_file_df = pd.read_csv(mappings_path + 'all_dates_services_schedule.csv')
@@ -34,9 +38,6 @@ def trips_to_daily_nodes_edges():
 
     start_date = pd.to_datetime(all_dates_services_file_df['date'].iloc[0], format='%Y%m%d')
     end_date = pd.to_datetime(all_dates_services_file_df['date'].iloc[-1], format='%Y%m%d')
-
-    # start_date = pd.to_datetime(20190101, format='%Y%m%d')
-    # end_date = pd.to_datetime(20191231, format='%Y%m%d')
 
     date_range = pd.date_range(start=start_date, end=end_date)
     date_range_df = pd.DataFrame({'date': date_range.strftime('%Y%m%d').astype(int)})

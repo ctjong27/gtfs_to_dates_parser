@@ -3,39 +3,28 @@ from datetime import datetime, timedelta
 import os
 import re
 
-# # Override to retrieve all dates' services
-# SEARCH_FROM_DATE = 10010101
-# SEARCH_TO_DATE = 99991231
-
 extract_path = "./files/extracted/"
 calendar_path = "/calendar.txt"
 calendar_dates_path = "/calendar_dates.txt"
 
 def files_to_service_schedule():
+    """
+    Function to extract data from ./files/extracted/[date]/calendar.txt and ./files/extracted/[date]/calendar_dates.txt files
+    and combines them to create a service schedule.
+
+    It saves the resulting schedule to a CSV file named 'all_dates_services_schedule.csv' in the 'mappings' folder.
     
-    # Configuration
-    SEARCH_FROM_YEAR  = 2019
-    SEARCH_FROM_MONTH = 1
-    SEARCH_FROM_DAY   = 1
-
-    SEARCH_TO_YEAR  = 2019
-    SEARCH_TO_MONTH = 12
-    SEARCH_TO_DAY   = 31
-
-    SEARCH_FROM_DATE = SEARCH_FROM_YEAR*10000 + SEARCH_FROM_MONTH*100 + SEARCH_FROM_DAY
-    SEARCH_TO_DATE = SEARCH_TO_YEAR*10000 + SEARCH_TO_MONTH*100 + SEARCH_TO_DAY
-
-
-    # calendar_pattern = r"calendar_\d+.*\.txt"
-    # calendar_dates_pattern = r"calendar_dates_\d+.*\.txt"
-
-    # calendar_files = [f for f in os.listdir(folder_path) if re.match(calendar_pattern, f)]
-    # calendar_dates_files = [f for f in os.listdir(folder_path) if re.match(calendar_dates_pattern, f)]
-
+    Reads files from ./files/extracted/*
+    Generates ./mappings/all_dates_service_schedule.csv which maps dates-to-services, for every day
+    The code goes through every single date as to ensure that no gtfs feed data is overlooked
+    """
+    
+    # Index dates based on existing dates folder in ./files/extracted/ path
     gtfs_generation_dates = [item for item in os.listdir(extract_path) if os.path.isdir(os.path.join(extract_path, item))]
 
     df_calendar = pd.DataFrame()
     df_calendar_dates = pd.DataFrame()
+
     # Set the path to the GTFS files
     for gtfs_date in gtfs_generation_dates:
         # calendar_file = folder_path + filename # example: calendar_20181221.txt'
@@ -94,6 +83,16 @@ def files_to_service_schedule():
 
 
 def process_calendar_file(gtfs_generation_date):
+    """
+    This function reads the calendar.txt file for a given GTFS generation date and generates a DataFrame with the service ID for each date.
+
+    Parameter:
+        gtfs_generation_date (str): The GTFS generation date (in YYYYMMDD format) for which to process the calendar.txt file.
+    
+    Returns:
+        dates (DataFrame): A DataFrame with columns 'date', 'service_id', and 'gtfs_generation_date' that lists the service ID for each date in the calendar.txt file.
+    """
+    
     # Read the calendar.txt file into a DataFrame
     calendar = pd.read_csv(extract_path + gtfs_generation_date + calendar_path)
 
@@ -119,6 +118,15 @@ def process_calendar_file(gtfs_generation_date):
     return(dates)
 
 def process_calendar_dates_file(gtfs_generation_date):
+    """
+    This function reads the calendar_dates.txt file for a given GTFS generation date.
+
+    Args:
+        gtfs_generation_date (str): The GTFS generation date (in YYYYMMDD format) for which to process the calendar_dates.txt file.
+    
+    Returns:
+        calendar_dates (DataFrame): A DataFrame with the contents of the calendar_dates.txt file for the given GTFS generation date.
+    """
     # Read the calendar_dates.txt file into a DataFrame
     calendar_dates = pd.read_csv(extract_path + gtfs_generation_date + calendar_dates_path)
 

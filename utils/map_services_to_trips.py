@@ -15,10 +15,13 @@ def services_to_trips():
     Generates ./mappings/services_to_trips.csv which maps services-to-trips
     """
 
+    # Index dates based on existing dates folder in ./files/extracted/ path
     gtfs_generation_dates = [item for item in os.listdir(extract_path) if os.path.isdir(os.path.join(extract_path, item))]
 
+    # For all valid dates, extract trips taken
     total_trips = pd.DataFrame()
     for i, item in enumerate(gtfs_generation_dates):
+        
         # Set the last date for 'next_item' to be highdate
         next_item = gtfs_generation_dates[i+1] if i < len(gtfs_generation_dates)-1 else 99991231
         total_trips = pd.concat([total_trips, process_trips_dates_file(item, next_item)])
@@ -51,6 +54,5 @@ def process_trips_dates_file(current_gtfs_date, next_gtfs_date):
     transfers = pd.read_csv(extract_path + current_gtfs_date + trips_path)
     transfers['current_gtfs_date'] = current_gtfs_date
     transfers['next_gtfs_date'] = next_gtfs_date
-    # transfers['next_gtfs_date'] = 99991231 if next_gtfs_date == None else next_gtfs_date
 
     return(transfers)

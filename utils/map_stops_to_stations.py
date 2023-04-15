@@ -8,8 +8,15 @@ transfers_path = "/transfers.txt"
 def stops_to_stations():
     """
     This function creates a mapping between stops and stations from the transfer information in the GTFS files.
+
+    Reads from ./files/extracted/*
+    Generates ./mappings/stops_to_stations.csv and ./mappings/stations_to_stops.csv to allow for bidirectional indexing
+
+    This consolidates stops into stations that can be used as the base unit for graph analysis
+    This is because different lines may use different tracks (or stops) but still share the same station at a location
     """
     
+    # Index dates based on existing dates folder in ./files/extracted/ path
     gtfs_generation_dates = [item for item in os.listdir(extract_path) if os.path.isdir(os.path.join(extract_path, item))]
 
     total_transfers = pd.DataFrame()

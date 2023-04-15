@@ -8,13 +8,24 @@ stops_path = "/stops.txt"
 gtfs_generation_dates = [item for item in os.listdir(extract_path) if os.path.isdir(os.path.join(extract_path, item))]
 
 def stations_to_coordinates():
+    """
+    Function to generate a DataFrame of coordinates (latitude and longitude) for each station from the stops file and 
+    station-to-stop mappings file.
+
+    Reads from ./files/extracted/*
+    Also reads from ./mappings/stations_to_stops.csv
+    Generates ./mappings/stations_to_coordinates.csv which attributes x y coordinates to stations
+
+    Returns:
+    coordinates_df (pandas.DataFrame): A DataFrame with the station_id, mean stop_lat, and mean stop_lon.
+    """
+
     # Read in the stations_to_stops.csv file to a DataFrame
     stations_to_stops_df = pd.read_csv('mappings/stations_to_stops.csv')
 
     stops_df = process_stops_file()
 
     # Merge the stops_df and stations_to_stops_df DataFrames on the stop_id column
-    # merged_df = pd.merge(stops_df, stations_to_stops_df, on='stop_id')
     merged_df = pd.merge(stops_df, stations_to_stops_df, left_on=['stop_id'], right_on=['station_id'])
 
     merged_df = merged_df[['stop_lat','stop_lon','station_id']]

@@ -49,7 +49,7 @@ def run_networkx_analysis():
     
     # Draw the graph using matplotlib
     pos = nx.get_node_attributes(G, 'pos')
-    plt.figure(figsize=(20,20)) 
+    plt.figure(figsize=(40,40)) 
     nx.draw(G, pos, with_labels=True, node_color="skyblue", edge_color="gray", node_size=1000, alpha=0.7)
     nx.draw_networkx_edge_labels(G, pos,
                             edge_labels=nx.get_edge_attributes(G,'weight'))
