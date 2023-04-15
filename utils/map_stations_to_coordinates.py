@@ -34,6 +34,15 @@ def stations_to_coordinates():
 
 
 def process_stops_file():
+    """
+    Reads the stops.txt files for each GTFS generation date and concatenates them into a single pandas DataFrame. 
+    Extracts the columns 'stop_id', 'parent_station', 'stop_lat', and 'stop_lon' from the DataFrame, 
+    drops any duplicates, and returns the resulting DataFrame.
+    
+    Returns:
+    pandas.DataFrame: The stops.txt file as a pandas DataFrame, with columns 'stop_id', 'parent_station', 
+                       'stop_lat', and 'stop_lon', and with duplicate rows removed.
+    """
 
     agg_stops = pd.DataFrame()
     for gtfs_date in gtfs_generation_dates:

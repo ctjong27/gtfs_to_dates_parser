@@ -3,10 +3,10 @@ from datetime import datetime, timedelta
 import os
 import re
 
-# combine data into a new table that combines the data as station_from. station_to, total_count, aggregate_seconds
-# the data is to be retrieved for each date and stored into their appropriate csv file under year/month/ path
+# Combine data into a new table that combines the data as station_from. station_to, total_count, aggregate_seconds
+# The data is to be retrieved for each date and stored into their appropriate csv file under year/month/ path
 
-# the dates to process are to be selected within set range
+# The dates to process are to be selected within set range
 
 # This code will do the following, generate daily graph data for every day
 # from the daily graph data, consolidate them based on a provided range
@@ -14,7 +14,10 @@ import re
 mappings_path = "./mappings/"
 
 def trips_to_daily_nodes_edges():
-    # services_schedule_file_name = f"{SEARCH_START_DATE}_to_{SEARCH_END_DATE}_services_schedule.csv"
+    """
+    Generates daily node and edge files for each date in the GTFS dataset
+    """
+
     all_dates_services_file_df = pd.read_csv(mappings_path + 'all_dates_services_schedule.csv')
     services_to_trips_file_df = pd.read_csv(mappings_path + 'services_to_trips.csv')
     trips_to_station_graph_file_df = pd.read_csv(mappings_path + 'trips_to_station_nodes_edges.csv')

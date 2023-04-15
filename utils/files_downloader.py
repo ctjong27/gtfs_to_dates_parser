@@ -4,8 +4,18 @@ import os
 from datetime import datetime
 import zipfile
 
-def download_data():
-    url = "https://transitfeeds.com/p/mta/79"
+def download_data(url_suffix):
+    """
+    Web scrapes the website https://transitfeeds.com/ in order to find applicable GTFS download data.
+    
+    The retrieved data is unzipped, processed, and saved to their respective local directories.
+
+    Data is stored in ./files/ under /zip_files/ which is then extracted into /extracted/
+    """
+
+    # Prepare data retrieval via web sraping
+    base_url = 'https://transitfeeds.com/'
+    url = base_url + url_suffix
     response = requests.get(url)
     total_pages = 0
 
@@ -18,10 +28,9 @@ def download_data():
     else:
         print(f"Failed to retrieve data from {url}. Status code: {response.status_code}")
 
+    # Iterate through all pages from until total_pages
     a_text_list = []
-    base_url = 'https://transitfeeds.com/'
 
-    # Loop through pages 1 to total_pages
     for page_num in range(1, total_pages + 1):
         url = f'https://transitfeeds.com/p/mta/79?p={page_num}'
         response = requests.get(url)

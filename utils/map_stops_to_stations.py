@@ -6,6 +6,10 @@ import re
 extract_path = "./files/extracted/"
 transfers_path = "/transfers.txt"
 def stops_to_stations():
+    """
+    This function creates a mapping between stops and stations from the transfer information in the GTFS files.
+    """
+    
     gtfs_generation_dates = [item for item in os.listdir(extract_path) if os.path.isdir(os.path.join(extract_path, item))]
 
     total_transfers = pd.DataFrame()
@@ -82,6 +86,16 @@ def stops_to_stations():
 
 
 def process_transfers_dates_file(gtfs_generation_date):
+    """
+    Reads the transfers.txt file for a specific GTFS generation date and returns it as a pandas DataFrame.
+    
+    Parameters:
+    gtfs_generation_date (str): The GTFS generation date for which to read the transfers.txt file.
+    
+    Returns:
+    pandas.DataFrame: The transfers.txt file as a pandas DataFrame.
+    """
+
     # Read the calendar_dates.txt file into a DataFrame
     transfers = pd.read_csv(extract_path + gtfs_generation_date + transfers_path)
 

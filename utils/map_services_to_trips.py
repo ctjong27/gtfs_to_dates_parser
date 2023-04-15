@@ -2,14 +2,19 @@ import pandas as pd
 from datetime import datetime, timedelta
 import os
 
-# The reason from and to gtfs generation dates are included is to ensure that different
-# timeframes' gtfs service_id's trip_ids are maintained
-
 # Retrieve trips.txt files for each gtfs generation dates
 extract_path = "./files/extracted/"
 trips_path = "/trips.txt"
 
 def services_to_trips():
+    """
+    Reads and processes the trips.txt files for all GTFS dates in the extract_path directory.
+    Generates a mapping file 'services_to_trips.csv' that maps service_ids to corresponding trip_ids.
+
+    Reads from ./files/extracted/*
+    Generates ./mappings/services_to_trips.csv which maps services-to-trips
+    """
+
     gtfs_generation_dates = [item for item in os.listdir(extract_path) if os.path.isdir(os.path.join(extract_path, item))]
 
     total_trips = pd.DataFrame()
@@ -30,6 +35,18 @@ def services_to_trips():
     unique_transfers.to_csv('mappings/services_to_trips.csv', index=False)
 
 def process_trips_dates_file(current_gtfs_date, next_gtfs_date):
+    """
+    Reads the 'trips.txt' file for a given GTFS date, adds the 'current_gtfs_date' and 'next_gtfs_date' columns
+    to the resulting DataFrame, and returns it.
+
+    Parameters:
+        current_gtfs_date (str): The current GTFS date being processed.
+        next_gtfs_date (str): The next GTFS date in the list. If the current date is the last date, this is set to 99991231.
+
+    Returns:
+    transfers (pandas.DataFrame): A DataFrame containing the 'service_id', 'trip_id', 'current_gtfs_date', and 'next_gtfs_date' columns.
+    """
+
     # Read the trips.txt file into a DataFrame
     transfers = pd.read_csv(extract_path + current_gtfs_date + trips_path)
     transfers['current_gtfs_date'] = current_gtfs_date

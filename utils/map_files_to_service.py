@@ -3,27 +3,28 @@ from datetime import datetime, timedelta
 import os
 import re
 
-# # Configuration
-# SEARCH_FROM_YEAR  = 2019
-# SEARCH_FROM_MONTH = 1
-# SEARCH_FROM_DAY   = 1
-
-# SEARCH_TO_YEAR  = 2019
-# SEARCH_TO_MONTH = 12
-# SEARCH_TO_DAY   = 31
-
-# SEARCH_FROM_DATE = SEARCH_FROM_YEAR*10000 + SEARCH_FROM_MONTH*100 + SEARCH_FROM_DAY
-# SEARCH_TO_DATE = SEARCH_TO_YEAR*10000 + SEARCH_TO_MONTH*100 + SEARCH_TO_DAY
-
-# Override to retrieve all dates' services
-SEARCH_FROM_DATE = 10010101
-SEARCH_TO_DATE = 99991231
+# # Override to retrieve all dates' services
+# SEARCH_FROM_DATE = 10010101
+# SEARCH_TO_DATE = 99991231
 
 extract_path = "./files/extracted/"
 calendar_path = "/calendar.txt"
 calendar_dates_path = "/calendar_dates.txt"
 
 def files_to_service_schedule():
+    
+    # Configuration
+    SEARCH_FROM_YEAR  = 2019
+    SEARCH_FROM_MONTH = 1
+    SEARCH_FROM_DAY   = 1
+
+    SEARCH_TO_YEAR  = 2019
+    SEARCH_TO_MONTH = 12
+    SEARCH_TO_DAY   = 31
+
+    SEARCH_FROM_DATE = SEARCH_FROM_YEAR*10000 + SEARCH_FROM_MONTH*100 + SEARCH_FROM_DAY
+    SEARCH_TO_DATE = SEARCH_TO_YEAR*10000 + SEARCH_TO_MONTH*100 + SEARCH_TO_DAY
+
 
     # calendar_pattern = r"calendar_\d+.*\.txt"
     # calendar_dates_pattern = r"calendar_dates_\d+.*\.txt"

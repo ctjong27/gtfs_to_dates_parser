@@ -2,27 +2,28 @@ import pandas as pd
 from datetime import datetime, timedelta
 import os
 
-def aggregate_from_daterange():
-    # Configuration
+def aggregate_from_daterange(search_start_year, search_start_month, search_start_day,
+                             search_end_year, search_end_month, search_end_day):
+    """
+    This function aggregates data from a range of dates specified by the input parameters.
+    
+    Parameters:
+        search_start_year (int): Year of the start date for the search.
+        search_start_month (int): Month of the start date for the search.
+        search_start_day (int): Day of the start date for the search.
+        search_end_year (int): Year of the end date for the search.
+        search_end_month (int): Month of the end date for the search.
+        search_end_day (int): Day of the end date for the search.
+    """
+
+    # Configurations
     CALCULATE_DATE_RANGE = True
 
-    SEARCH_START_YEAR  = 2019
-    SEARCH_START_MONTH = 1
-    SEARCH_START_DAY   = 1
+    search_start_date = search_start_year*10000 + search_start_month*100 + search_start_day
+    search_end_date   = search_end_year*10000 + search_end_month*100 + search_end_day
 
-    SEARCH_END_YEAR  = 2019
-    SEARCH_END_MONTH = 12
-    SEARCH_END_DAY   = 31
-
-    SEARCH_START_DATE = SEARCH_START_YEAR*10000 + SEARCH_START_MONTH*100 + SEARCH_START_DAY
-    SEARCH_END_DATE   = SEARCH_END_YEAR*10000 + SEARCH_END_MONTH*100 + SEARCH_END_DAY
-
-    # date_range = pd.date_range(start=SEARCH_START_DATE, end=SEARCH_END_DATE, closed='left')
-    # date_range
-
-
-    queried_start_date = pd.to_datetime(SEARCH_START_DATE, format='%Y%m%d')
-    queried_end_date = pd.to_datetime(SEARCH_END_DATE, format='%Y%m%d')
+    queried_start_date = pd.to_datetime(search_start_date, format='%Y%m%d')
+    queried_end_date = pd.to_datetime(search_end_date, format='%Y%m%d')
 
     queried_date_range = pd.date_range(start=queried_start_date, end=queried_end_date)
     queried_date_range_df = pd.DataFrame({'date': queried_date_range.strftime('%Y%m%d').astype(int)})
@@ -55,6 +56,6 @@ def aggregate_from_daterange():
         # Generate a mappings folder if it doesn't exist
         if not os.path.exists('results/queried_dates'):
             os.makedirs('results/queried_dates')
-        aggregate_graph_values_df.to_csv(f'results/queried_dates/{SEARCH_START_DATE}-{SEARCH_END_DATE}-aggregated_nodes_edges.csv', index=False)
+        aggregate_graph_values_df.to_csv(f'results/queried_dates/{search_start_date}-{search_end_date}-aggregated_nodes_edges.csv', index=False)
 
 
