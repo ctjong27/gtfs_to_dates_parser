@@ -8,7 +8,7 @@ import scipy as sc
 # lower weight is good
 # time / total = weight
 
-def run_networkx_analysis():
+def run_networkx_analysis(is_weighed=True):
     """
     Runs a network analysis on a dataset of transit system stops and outputs a dataframe containing various centrality
     measures for each stop, as well as their latitude and longitude coordinates.
@@ -56,10 +56,17 @@ def run_networkx_analysis():
     plt.show()
 
     # Conduct NetworkX Analysis with the inclusion of weight in edge attributes
-    betweenness = nx.betweenness_centrality(G, weight='weight')
-    closeness = nx.closeness_centrality(G, distance='weight')
-    pagerank = nx.pagerank(G, weight='weight')
-    eigenvector = nx.eigenvector_centrality(G, weight='weight')
+    betweenness = closeness = pagerank = eigenvector = None
+    if is_weighed:
+        betweenness = nx.betweenness_centrality(G, weight='weight')
+        closeness = nx.closeness_centrality(G, distance='weight')
+        pagerank = nx.pagerank(G, weight='weight')
+        eigenvector = nx.eigenvector_centrality(G, weight='weight')
+    if not is_weighed:
+        betweenness = nx.betweenness_centrality(G)
+        closeness = nx.closeness_centrality(G)
+        pagerank = nx.pagerank(G)
+        eigenvector = nx.eigenvector_centrality(G)
     df = pd.DataFrame([betweenness, closeness, pagerank, eigenvector]).transpose()
     df.columns = ['betweenness','closeness', 'pagerank', 'eigenvector']
 
@@ -99,5 +106,8 @@ def run_networkx_analysis():
     # Prepare and export dataframe to be utilized by GIS shapefile objects
     df = df.rename(columns={'closeness': 'clse', 'betweenness': 'btwn', 'pagerank': 'pgrk', 'eigenvector': 'egvt'})
     df = df[['station_id','stop_lat','stop_lon','btwn','clse', 'pgrk', 'egvt']]
-    df.to_csv('./results/networkx_analysis.csv', index=False)
+    if is_weighed:
+        df.to_csv('./results/networkx_analysis_weighed.csv', index=False)
+    if not is_weighed:
+        df.to_csv('./results/networkx_analysis_unweighed.csv', index=False)
     return df
