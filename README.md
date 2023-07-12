@@ -46,6 +46,8 @@ date,total_stops\
 20200108,216241\
 20200109,432482
 
+<hr>
+
 # Output
 ![Screenshot](./images/output.png)
 ![Screenshot](./images/output_zoomed.png)
