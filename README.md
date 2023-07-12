@@ -45,3 +45,7 @@ date,total_stops\
 20200107,216241\
 20200108,216241\
 20200109,432482
+
+# Output
+![Screenshot](./images/output.png)
+
