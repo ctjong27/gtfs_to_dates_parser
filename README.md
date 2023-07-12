@@ -48,4 +48,5 @@ date,total_stops\
 
 # Output
 ![Screenshot](./images/output.png)
+![Screenshot](./images/output_zoomed.png)
 
